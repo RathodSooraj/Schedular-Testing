@@ -28,8 +28,10 @@ public class Appointment {
 	private Long patientId;
 	@Column(name = "appointment_date")
 	private LocalDate appointmentDate;
-	@Column(name = "appointment_time")
-	private LocalTime appointmentTime;
+	@Column(name = "appointment_start_time")
+	private LocalTime appointmentStartTime;
+	@Column(name = "appointment_end_time")
+	private LocalTime appointmentEndTime;
 	@Column(name = "edit_id")
 	private Long edit_id;
 }
