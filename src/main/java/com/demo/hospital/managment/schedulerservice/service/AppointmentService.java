@@ -16,7 +16,6 @@ public class AppointmentService implements AppointmentServiceInteface{
 	
 	@Override
 	public List<Appointment> getAppointmentToPhysician(Long physicianId) {
-		
 		return appointmentRepository.getAppointmentToPhysician(physicianId);
 	}
 
