@@ -1,5 +1,6 @@
 package com.demo.hospital.managment.schedulerservice.service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,13 +16,13 @@ public class AppointmentService implements AppointmentServiceInteface{
 	AppointmentRepository appointmentRepository;
 	
 	@Override
-	public List<Appointment> getAppointmentToPhysician(Long physicianId) {
-		return appointmentRepository.getAppointmentToPhysician(physicianId);
+	public List<Appointment> getAppointmentToPhysician(Long physicianId,LocalDate startDate,LocalDate endDate) {
+		return appointmentRepository.getAppointmentToPhysician(physicianId,startDate,endDate);
 	}
 
 	@Override
-	public List<Appointment> getAppointmentToPatient(Long patientId) {
+	public List<Appointment> getAppointmentToPatient(Long patientId,LocalDate startDate,LocalDate endDate) {
 		
-		return appointmentRepository.getAppointmentToPatient(patientId);
+		return appointmentRepository.getAppointmentToPatient(patientId,startDate,endDate);
 	}
 }
