@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import lombok.Getter;
 import lombok.Setter;
 @Getter
@@ -27,6 +29,7 @@ public class Appointment {
 	@Column(name = "patient_id")
 	private Long patientId;
 	@Column(name = "appointment_date")
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	private LocalDate appointmentDate;
 	@Column(name = "appointment_start_time")
 	private LocalTime appointmentStartTime;

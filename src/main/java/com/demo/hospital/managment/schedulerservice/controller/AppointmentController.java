@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.demo.hospital.managment.schedulerservice.entity.Appointment;
 import com.demo.hospital.managment.schedulerservice.serviceinterface.AppointmentServiceInteface;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @RestController
 @RequestMapping("/appointment")
@@ -32,7 +34,7 @@ public class AppointmentController {
 	 */
 	
 	@GetMapping(path = "/getAppointmentToPhysician")
-	public ResponseEntity<List<Appointment>> getAppointmentToPhysician(@RequestParam Long physicianId, LocalDate startDate,LocalDate endDate){
+	public ResponseEntity<List<Appointment>> getAppointmentToPhysician(@RequestParam Long physicianId, @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate, @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate){
 		try {
 			List<Appointment> listAppointment = appointmentServiceInteface.getAppointmentToPhysician(physicianId,startDate,endDate);
 			return new ResponseEntity<>(listAppointment,HttpStatus.OK);
@@ -53,7 +55,7 @@ public class AppointmentController {
 	 */
 	
 	@GetMapping(path = "/getAppointmentToPatient")
-	public ResponseEntity<List<Appointment>> getAppointmentToPatient(@RequestParam Long patientId,LocalDate startDate,LocalDate endDate){
+	public ResponseEntity<List<Appointment>> getAppointmentToPatient(@RequestParam Long patientId,@DateTimeFormat(pattern = "yyyy-MM-dd")LocalDate startDate, @DateTimeFormat(pattern = "yyyy-MM-dd")LocalDate endDate){
 		
 		try {
 			List<Appointment> listAppointment = appointmentServiceInteface.getAppointmentToPatient(patientId,startDate,endDate);
