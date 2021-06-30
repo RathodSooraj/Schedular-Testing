@@ -1,5 +1,6 @@
 package com.demo.hospital.managment.schedulerservice.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,9 +32,9 @@ public class AppointmentController {
 	 */
 	
 	@GetMapping(path = "/getAppointmentToPhysician")
-	public ResponseEntity<List<Appointment>> getAppointmentToPhysician(@RequestParam Long physicianId){
+	public ResponseEntity<List<Appointment>> getAppointmentToPhysician(@RequestParam Long physicianId, LocalDate startDate,LocalDate endDate){
 		try {
-			List<Appointment> listAppointment = appointmentServiceInteface.getAppointmentToPhysician(physicianId);
+			List<Appointment> listAppointment = appointmentServiceInteface.getAppointmentToPhysician(physicianId,startDate,endDate);
 			return new ResponseEntity<>(listAppointment,HttpStatus.OK);
 		}
 		catch (Exception e) {
@@ -52,10 +53,10 @@ public class AppointmentController {
 	 */
 	
 	@GetMapping(path = "/getAppointmentToPatient")
-	public ResponseEntity<List<Appointment>> getAppointmentToPatient(@RequestParam Long patientId){
+	public ResponseEntity<List<Appointment>> getAppointmentToPatient(@RequestParam Long patientId,LocalDate startDate,LocalDate endDate){
 		
 		try {
-			List<Appointment> listAppointment = appointmentServiceInteface.getAppointmentToPatient(patientId);
+			List<Appointment> listAppointment = appointmentServiceInteface.getAppointmentToPatient(patientId,startDate,endDate);
 			return new ResponseEntity<>(listAppointment,HttpStatus.OK);
 		}
 		catch (Exception e) {
