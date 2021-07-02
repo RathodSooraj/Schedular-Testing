@@ -20,8 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.demo.hospital.managment.notesservice.util.MessageResponseDto;
-import com.demo.hospital.managment.notesservice.util.StatusMessage;
+
 import com.demo.hospital.managment.schedulerservice.entity.Appointment;
 import com.demo.hospital.managment.schedulerservice.serviceinterface.AppointmentServiceInteface;
 import com.demo.hospital.managment.schedulerservice.util.AppointmentUtil;
@@ -33,7 +32,7 @@ import com.demo.hospital.managment.schedulerservice.util.StatusMessage;
  *
  */
 @RestController
-@RequestMapping("/appointment")
+@RequestMapping("appointment")
 @CrossOrigin(value = "http://localhost:4200")
 public class AppointmentController {
 
@@ -69,11 +68,11 @@ public class AppointmentController {
 	 * @param appointment
 	 * @return String (Confirmation Message)
 	 */
-	@PostMapping("/save")
+	/*@PostMapping("/save")
 	public ResponseEntity<MessageResponseDto> saveAppointment(@RequestBody Appointment appointment) {
 		ResponseEntity<MessageResponseDto> resp = null;
 		try {
-			Long id = appointmentServiceInteface.saveAppointment(appointment);
+			Long id = appointmentService.saveAppointment(appointment);
 			resp = new ResponseEntity<MessageResponseDto>(
 					new MessageResponseDto(StatusMessage.APPOINTMENT_IS_BOOKED.getMessage()), HttpStatus.CREATED);
 		} catch (Exception e) {
@@ -82,7 +81,7 @@ public class AppointmentController {
 			e.printStackTrace();
 		}
 		return resp;
-	}
+	}*/
 
 	/**
 	 * This API is use to get all appointment of physician

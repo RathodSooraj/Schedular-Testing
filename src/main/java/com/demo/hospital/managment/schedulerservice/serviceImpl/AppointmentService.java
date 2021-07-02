@@ -43,11 +43,6 @@ public class AppointmentService implements AppointmentServiceInteface {
 	}
 
 	@Override
-	public void deleteAppointmentByid(Long appointmentId) {
-		appointmentRepository.deleteById(appointmentId);
-	}
-
-	@Override
 	public Long updateAppointment(Appointment appointment) {
 		return saveAppointment(appointment);
 	}
