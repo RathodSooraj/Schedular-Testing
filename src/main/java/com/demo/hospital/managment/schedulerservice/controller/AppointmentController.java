@@ -1,8 +1,10 @@
 package com.demo.hospital.managment.schedulerservice.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -17,6 +19,7 @@ import com.demo.hospital.managment.notesservice.util.MessageResponseDto;
 import com.demo.hospital.managment.notesservice.util.StatusMessage;
 import com.demo.hospital.managment.schedulerservice.entity.Appointment;
 import com.demo.hospital.managment.schedulerservice.serviceinterface.AppointmentServiceInteface;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 /**
  * @author suraj
@@ -26,11 +29,12 @@ import com.demo.hospital.managment.schedulerservice.serviceinterface.Appointment
  * @author suraj
  *
  */
+
+
 @RestController
 @RequestMapping("/appointment")
 @CrossOrigin(value = "http://localhost:4200")
 public class AppointmentController {
-
 	@Autowired
 	AppointmentServiceInteface appointmentServiceInteface;
 
@@ -62,18 +66,20 @@ public class AppointmentController {
 	 * @param
 	 * @return
 	 */
+	
 	@GetMapping(path = "/getAppointmentToPhysician")
-	public ResponseEntity<List<Appointment>> getAppointmentToPhysician(@RequestParam Long physicianId) {
+	public ResponseEntity<List<Appointment>> getAppointmentToPhysician(@RequestParam Long physicianId, @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate, @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate){
 		try {
-			List<Appointment> listAppointment = appointmentServiceInteface.getAppointmentToPhysician(physicianId);
-			return new ResponseEntity<>(listAppointment, HttpStatus.OK);
-		} catch (Exception e) {
+			List<Appointment> listAppointment = appointmentServiceInteface.getAppointmentToPhysician(physicianId,startDate,endDate);
+			return new ResponseEntity<>(listAppointment,HttpStatus.OK);
+		}
+		catch (Exception e) {
 			e.getMessage();
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-
+		
 	}
-
+	
 	/**
 	 * This API is use to get all appointment of patient
 	 * 
@@ -81,18 +87,19 @@ public class AppointmentController {
 	 * @param
 	 * @return
 	 */
-
+	
 	@GetMapping(path = "/getAppointmentToPatient")
-	public ResponseEntity<List<Appointment>> getAppointmentToPatient(@RequestParam Long patientId) {
-
+	public ResponseEntity<List<Appointment>> getAppointmentToPatient(@RequestParam Long patientId,@DateTimeFormat(pattern = "yyyy-MM-dd")LocalDate startDate, @DateTimeFormat(pattern = "yyyy-MM-dd")LocalDate endDate){
+		
 		try {
-			List<Appointment> listAppointment = appointmentServiceInteface.getAppointmentToPatient(patientId);
-			return new ResponseEntity<>(listAppointment, HttpStatus.OK);
-		} catch (Exception e) {
+			List<Appointment> listAppointment = appointmentServiceInteface.getAppointmentToPatient(patientId,startDate,endDate);
+			return new ResponseEntity<>(listAppointment,HttpStatus.OK);
+		}
+		catch (Exception e) {
 			e.getMessage();
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-
+		
 	}
-
+	
 }
