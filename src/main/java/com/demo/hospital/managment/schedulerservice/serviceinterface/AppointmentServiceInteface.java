@@ -11,8 +11,14 @@ public interface AppointmentServiceInteface {
 
 	public void deleteAppointment(Long appointmentId);
 
-	public Appointment findAppointmentById(Long id);
-	
-	public List<Appointment> getAppointmentToPhysician(Long physicianId,LocalDate startDate,LocalDate endDate);
-	public List<Appointment> getAppointmentToPatient(Long patientId,LocalDate startDate,LocalDate endDate);
+	public List<Appointment> getAppointmentToPhysician(Long physicianId, LocalDate startDate, LocalDate endDate);
+
+	public List<Appointment> getAppointmentToPatient(Long patientId, LocalDate startDate, LocalDate endDate);
+
+	public Appointment findAppointmentById(Long appointmentId);
+
+	public void deleteAppointmentByid(Long appointmentId);
+
+	public Long updateAppointment(Appointment appointment);
+
 }
