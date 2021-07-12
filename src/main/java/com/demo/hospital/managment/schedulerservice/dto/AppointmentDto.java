@@ -1,18 +1,26 @@
 package com.demo.hospital.managment.schedulerservice.dto;
 
-import java.time.LocalDateTime;
+import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class AppointmentDto {
+public class AppointmentDto implements Serializable, Cloneable {
+	
+	private static final long serialVersionUID = 1L;
+	
+	
 	private Long appointmentId;
 	private String meetingTitle;
 	private String description;
 	private Long physicianId;
 	private Long patientId;
-	private LocalDateTime dateAndTime;
-	private Long edit_id;
+	private LocalDate appointmentDate;
+	private LocalTime appointmentStartTime;
+	private LocalTime appointmentEndTime;
+	private Long editId;
 }

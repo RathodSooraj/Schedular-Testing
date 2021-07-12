@@ -1,7 +1,9 @@
 package com.demo.hospital.managment.schedulerservice.controller;
 
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,8 +21,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 import com.demo.hospital.managment.schedulerservice.entity.Appointment;
+import com.demo.hospital.managment.schedulerservice.entity.User;
 import com.demo.hospital.managment.schedulerservice.serviceinterface.AppointmentServiceInteface;
 import com.demo.hospital.managment.schedulerservice.util.AppointmentUtil;
 import com.demo.hospital.managment.schedulerservice.util.MessageResponseDto;
@@ -31,7 +35,7 @@ import com.demo.hospital.managment.schedulerservice.util.StatusMessage;
  *
  */
 @RestController
-@RequestMapping("/appointment")
+@RequestMapping("appointment")
 @CrossOrigin(value = "http://localhost:4200")
 public class AppointmentController {
 
@@ -39,6 +43,13 @@ public class AppointmentController {
 
 	@Autowired
 	AppointmentServiceInteface appointmentService;
+
+	@Autowired
+	RestTemplate restTemplate;
+
+	/*
+	 * @Value("${to.email}") private String emailAddress;
+	 */
 
 	/**
 	 * Below function is used to save an appointment
@@ -50,10 +61,13 @@ public class AppointmentController {
 	public ResponseEntity<MessageResponseDto> saveAppointment(@RequestBody Appointment appointment) {
 		ResponseEntity<MessageResponseDto> resp = null;
 		try {
+
 			Long id = appointmentService.saveAppointment(appointment);
 			resp = new ResponseEntity<>(new MessageResponseDto(StatusMessage.APPOINTMENT_IS_BOOKED.getMessage()),
 					HttpStatus.CREATED);
-		} catch (Exception e) {
+		} catch (
+
+		Exception e) {
 			resp = new ResponseEntity<>(new MessageResponseDto(StatusMessage.SERVER_ERROR.getMessage()),
 					HttpStatus.INTERNAL_SERVER_ERROR);
 			e.printStackTrace();
@@ -141,7 +155,7 @@ public class AppointmentController {
 			Appointment dbappointment = appointmentService.findAppointmentById(appointmentId);
 			AppointmentUtil.copyNonNullValues(dbappointment, appointment);
 			appointmentService.updateAppointment(dbappointment);
-			resp = new ResponseEntity<>(new MessageResponseDto(StatusMessage.APPOINTMENT_IS_BOOKED.getMessage()),
+			resp = new ResponseEntity<>(new MessageResponseDto(StatusMessage.APPOINTMENT_IS_UPDATED.getMessage()),
 					HttpStatus.OK);
 		} catch (Exception e) {
 			resp = new ResponseEntity<>(new MessageResponseDto(StatusMessage.SERVER_ERROR.getMessage()),
@@ -151,4 +165,19 @@ public class AppointmentController {
 		return resp;
 	}
 
+	
+	  private void getEmployeeByRole() {
+	  
+	  Map < String, String > params = new HashMap < String, String > ();
+	  params.put("role", "physician");
+	  
+	  RestTemplate restTemplate = new RestTemplate();
+	  
+	  User result = restTemplate.getForObject(
+	  "http://localhost:8080/user/getUsersByRole?role=physician", User.class,
+	  params);
+	  
+	  System.out.println(result); }
+	 
+	
 }

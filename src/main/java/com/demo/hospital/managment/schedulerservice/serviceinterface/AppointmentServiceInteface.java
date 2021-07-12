@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import com.demo.hospital.managment.schedulerservice.entity.Appointment;
+import com.demo.hospital.managment.schedulerservice.entity.User;
 
 public interface AppointmentServiceInteface {
 
@@ -20,5 +21,7 @@ public interface AppointmentServiceInteface {
 	public void deleteAppointmentByid(Long appointmentId);
 
 	public Long updateAppointment(Appointment appointment);
+
+	
 
 }

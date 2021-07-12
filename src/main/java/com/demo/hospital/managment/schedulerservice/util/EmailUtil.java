@@ -13,13 +13,14 @@ import org.springframework.web.multipart.MultipartFile;
  */
 public class EmailUtil {
 	@Autowired
-	private JavaMailSender sender;
+	private static JavaMailSender sender;
 
 	/*
 	 * function to send the mail
 	 */
-	
-	public boolean sendEmail(String to, String subject, String text, String[] cc, String[] bcc, MultipartFile file) {
+
+	public static boolean sendEmail(String to, String subject, String text, String[] cc, String[] bcc,
+			MultipartFile file) {
 		boolean flag = false;
 
 		try {
@@ -52,7 +53,8 @@ public class EmailUtil {
 	/*
 	 * function with the minimum requirment
 	 */
-	public boolean sendEmail(String to, String subject, String text) {
+	public static boolean sendEmail(String to, String subject, String text) {
+		System.out.println("send method");
 		return sendEmail(to, subject, text);
 	}
 

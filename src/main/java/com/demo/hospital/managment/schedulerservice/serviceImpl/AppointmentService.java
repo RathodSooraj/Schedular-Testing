@@ -4,15 +4,21 @@ import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+
 import com.demo.hospital.managment.schedulerservice.entity.Appointment;
+import com.demo.hospital.managment.schedulerservice.entity.User;
 import com.demo.hospital.managment.schedulerservice.repository.AppointmentRepository;
 import com.demo.hospital.managment.schedulerservice.serviceinterface.AppointmentServiceInteface;
+import com.demo.hospital.managment.schedulerservice.util.EmailUtil;
 
 @Service
 public class AppointmentService implements AppointmentServiceInteface {
 	@Autowired
 	AppointmentRepository appointmentRepository;
+
 
 	@Override
 	public List<Appointment> getAppointmentToPhysician(Long physicianId, LocalDate startDate, LocalDate endDate) {
@@ -28,6 +34,7 @@ public class AppointmentService implements AppointmentServiceInteface {
 	@Override
 	public Long saveAppointment(Appointment appointment) {
 		Appointment appt = appointmentRepository.save(appointment);
+		
 		return appt.getAppointmentId();
 	}
 
@@ -39,7 +46,8 @@ public class AppointmentService implements AppointmentServiceInteface {
 
 	@Override
 	public Appointment findAppointmentById(Long appointmentId) {
-		return appointmentRepository.findById(appointmentId).get();
+		Appointment appointment = appointmentRepository.findById(appointmentId).get();
+		return appointment;
 	}
 
 	@Override
@@ -52,5 +60,6 @@ public class AppointmentService implements AppointmentServiceInteface {
 		return saveAppointment(appointment);
 	}
 
+	
 
 }

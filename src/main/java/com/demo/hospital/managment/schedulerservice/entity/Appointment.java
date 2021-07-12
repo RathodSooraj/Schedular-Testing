@@ -5,6 +5,8 @@ import java.time.LocalTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -19,6 +21,7 @@ import lombok.Setter;
 public class Appointment {
 	@Id
 	@Column(name = "appointment_id")
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long appointmentId;
 	@Column(name = "meeting_title")
 	private String meetingTitle;
@@ -36,5 +39,5 @@ public class Appointment {
 	@Column(name = "appointment_end_time")
 	private LocalTime appointmentEndTime;
 	@Column(name = "edit_id")
-	private Long edit_id;
+	private Long editId;
 }
