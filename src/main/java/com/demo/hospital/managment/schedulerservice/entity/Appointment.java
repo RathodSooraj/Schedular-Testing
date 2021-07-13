@@ -18,7 +18,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "appointment")
-public class Appointment {
+public class Appointment extends Auditable<String> {
 	@Id
 	@Column(name = "appointment_id")
 	@GeneratedValue(strategy = GenerationType.AUTO)

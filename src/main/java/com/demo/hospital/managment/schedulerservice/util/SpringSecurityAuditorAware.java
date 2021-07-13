@@ -8,8 +8,9 @@ public class SpringSecurityAuditorAware implements AuditorAware<String> {
 
 	@Override
 	public Optional<String> getCurrentAuditor() {
-		// TODO Auto-generated method stub
-		return Optional.ofNullable("a").filter(s -> !s.isEmpty());
+
+		
+		return Optional.ofNullable("admin").filter(s -> !s.isEmpty());
 	}
 
 }
