@@ -18,8 +18,6 @@ public interface AppointmentServiceInteface {
 
 	public Appointment findAppointmentById(Long appointmentId);
 
-	public void deleteAppointmentByid(Long appointmentId);
-
 	public Long updateAppointment(Appointment appointment);
 
 	
