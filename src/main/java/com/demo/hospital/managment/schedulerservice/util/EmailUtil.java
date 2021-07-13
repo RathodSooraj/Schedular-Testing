@@ -5,22 +5,27 @@ import javax.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
  * @author suraj
  *
  */
+@Component
 public class EmailUtil {
+
+	private EmailUtil() {
+	}
+
 	@Autowired
-	private static JavaMailSender sender;
+	private JavaMailSender sender;
 
 	/*
 	 * function to send the mail
 	 */
 
-	public static boolean sendEmail(String to, String subject, String text, String[] cc, String[] bcc,
-			MultipartFile file) {
+	public boolean sendEmail(String to, String subject, String text, String[] cc, String[] bcc, MultipartFile file) {
 		boolean flag = false;
 
 		try {
@@ -53,9 +58,8 @@ public class EmailUtil {
 	/*
 	 * function with the minimum requirment
 	 */
-	public static boolean sendEmail(String to, String subject, String text) {
-		System.out.println("send method");
-		return sendEmail(to, subject, text);
+	public boolean sendEmail(String to, String subject, String text) {
+		return sendEmail(to, subject, text, null, null, null);
 	}
 
 }

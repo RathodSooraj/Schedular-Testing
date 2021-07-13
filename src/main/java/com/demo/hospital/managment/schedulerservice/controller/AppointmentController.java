@@ -8,6 +8,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,11 +24,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
-
 import com.demo.hospital.managment.schedulerservice.entity.Appointment;
 import com.demo.hospital.managment.schedulerservice.entity.User;
 import com.demo.hospital.managment.schedulerservice.serviceinterface.AppointmentServiceInteface;
 import com.demo.hospital.managment.schedulerservice.util.AppointmentUtil;
+import com.demo.hospital.managment.schedulerservice.util.EmailUtil;
 import com.demo.hospital.managment.schedulerservice.util.MessageResponseDto;
 import com.demo.hospital.managment.schedulerservice.util.StatusMessage;
 
@@ -46,11 +47,13 @@ public class AppointmentController {
 	AppointmentServiceInteface appointmentService;
 
 	@Autowired
+	private EmailUtil emailUtil;
+
+	@Autowired
 	RestTemplate restTemplate;
 
-	/*
-	 * @Value("${to.email}") private String emailAddress;
-	 */
+	@Value("${to.email}")
+	private String emailAddress;
 
 	/**
 	 * Below function is used to save an appointment
@@ -64,6 +67,17 @@ public class AppointmentController {
 		try {
 
 			Long id = appointmentService.saveAppointment(appointment);
+			if (id > 0 && id != null) {
+				log.info(emailAddress);
+
+				new Thread(() -> {
+					String subject = "New Appointment Of " + appointment.getMeetingTitle();
+					String text = "This is the confirmation for your schedule appointment at"
+							+ appointment.getAppointmentStartTime() + " On " + appointment.getAppointmentDate();
+					emailUtil.sendEmail(emailAddress, subject, text);
+				}).start();
+
+			}
 			resp = new ResponseEntity<>(new MessageResponseDto(StatusMessage.APPOINTMENT_IS_BOOKED.getMessage()),
 					HttpStatus.CREATED);
 		} catch (
@@ -75,27 +89,6 @@ public class AppointmentController {
 		}
 		return resp;
 	}
-
-	/**
-	 * Below api is used to book an appointment
-	 * 
-	 * @param appointment
-	 * @return String (Confirmation Message)
-	 */
-	/*@PostMapping("/save")
-	public ResponseEntity<MessageResponseDto> saveAppointment(@RequestBody Appointment appointment) {
-		ResponseEntity<MessageResponseDto> resp = null;
-		try {
-			Long id = appointmentService.saveAppointment(appointment);
-			resp = new ResponseEntity<MessageResponseDto>(
-					new MessageResponseDto(StatusMessage.APPOINTMENT_IS_BOOKED.getMessage()), HttpStatus.CREATED);
-		} catch (Exception e) {
-			resp = new ResponseEntity<MessageResponseDto>(
-					new MessageResponseDto(StatusMessage.SERVER_ERROR.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
-			e.printStackTrace();
-		}
-		return resp;
-	}*/
 
 	/**
 	 * This API is use to get all appointment of physician
@@ -187,19 +180,4 @@ public class AppointmentController {
 		return resp;
 	}
 
-	
-	  private void getEmployeeByRole() {
-	  
-	  Map < String, String > params = new HashMap < String, String > ();
-	  params.put("role", "physician");
-	  
-	  RestTemplate restTemplate = new RestTemplate();
-	  
-	  User result = restTemplate.getForObject(
-	  "http://localhost:8080/user/getUsersByRole?role=physician", User.class,
-	  params);
-	  
-	  System.out.println(result); }
-	 
-	
 }
