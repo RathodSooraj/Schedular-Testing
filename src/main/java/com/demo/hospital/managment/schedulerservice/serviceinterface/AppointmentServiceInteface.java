@@ -3,6 +3,7 @@ package com.demo.hospital.managment.schedulerservice.serviceinterface;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.demo.hospital.managment.schedulerservice.dto.AppointmentDto;
 import com.demo.hospital.managment.schedulerservice.entity.Appointment;
 
 public interface AppointmentServiceInteface {
@@ -18,5 +19,7 @@ public interface AppointmentServiceInteface {
 	public Appointment findAppointmentById(Long appointmentId);
 
 	public Long updateAppointment(Appointment appointment);
+
+	public AppointmentDto getAppointmentById(Long id);
 
 }

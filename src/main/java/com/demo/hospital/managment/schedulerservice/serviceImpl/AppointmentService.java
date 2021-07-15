@@ -1,10 +1,13 @@
 package com.demo.hospital.managment.schedulerservice.serviceImpl;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.demo.hospital.managment.schedulerservice.dto.AppointmentDto;
 import com.demo.hospital.managment.schedulerservice.entity.Appointment;
 import com.demo.hospital.managment.schedulerservice.repository.AppointmentRepository;
 import com.demo.hospital.managment.schedulerservice.serviceinterface.AppointmentServiceInteface;
@@ -45,6 +48,23 @@ public class AppointmentService implements AppointmentServiceInteface {
 	@Override
 	public Long updateAppointment(Appointment appointment) {
 		return saveAppointment(appointment);
+	}
+
+	@Override
+	public AppointmentDto getAppointmentById(Long id) {
+		
+		Appointment apt = appointmentRepository.findById(id).get();
+		AppointmentDto dto = new AppointmentDto();
+		dto.setAppointmentId(apt.getAppointmentId());
+		dto.setAppointmentDate(apt.getAppointmentDate());
+		dto.setAppointmentEndTime(apt.getAppointmentEndTime());
+		dto.setAppointmentStartTime(apt.getAppointmentStartTime());
+		dto.setDescription(apt.getDescription());
+		dto.setMeetingTitle(apt.getMeetingTitle());
+		dto.setPatientId(apt.getPatientId());
+		dto.setPhysicianId(apt.getPhysicianId());
+		dto.setEdit_id(apt.getEdit_id());
+		return dto;
 	}
 
 
