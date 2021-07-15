@@ -4,7 +4,7 @@ import lombok.Getter;
 
 @Getter
 public enum StatusMessage {
-	APPOINTMENT_IS_BOOKED("Appointment is save"),
+	APPOINTMENT_IS_BOOKED("Appointment is saved"),
 	SERVER_ERROR("Error while processing request"),
 	APPOINTMENT_IS_NOT_AVAILABLE("Appointment is not available"),
 	APPOINTMENT_IS_DELETED("Appointment deleted successfully"),
