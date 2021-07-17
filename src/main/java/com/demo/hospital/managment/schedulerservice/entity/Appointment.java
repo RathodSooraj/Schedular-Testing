@@ -25,6 +25,7 @@ public class Appointment {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "appointment_id")
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long appointmentId;
 	@Column(name = "meeting_title")
 	@ApiModelProperty(notes = "Appointment Title")
@@ -43,5 +44,5 @@ public class Appointment {
 	@Column(name = "appointment_end_time")
 	private LocalTime appointmentEndTime;
 	@Column(name = "edit_id")
-	private Long edit_id;
+	private Long editId;
 }
