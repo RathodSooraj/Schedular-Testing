@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Contact;
@@ -20,25 +21,28 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 public class SwaggerConfig {
 
+	// Adding applicaton meta data
 	public static final Contact DEFAULT_CONTACT = new Contact("Suraj Rathod", "http://www.citiustech.com",
 			"Suraj.Rathod@citiustech.com");
 
 	private static final ApiInfo DEFAULT_API_INFO = new ApiInfo("Scheduling API Documentation",
-			"Scheduling Api Documentation Description", "Version 1.0", "urn:tos", DEFAULT_CONTACT, "Apache 2.0",
+			"Scheduling Api Documentation Description", "Version 1.0", "Free To Use", DEFAULT_CONTACT, "Apache 2.0",
 			"http://www.apache.org/licenses/LICENSE-2.0", new ArrayList<>());
 
-	private static final Set<String> DEFAULT_PRODUCES_AND_CONSUMES = new HashSet<String>(
+	private static final Set<String> DEFAULT_PRODUCES_AND_CONSUMES = new HashSet<>(
 			Arrays.asList("application/json", "application/xml"));
-
+ 
 	// Docket API
 	@Bean
 	public Docket api() {
 		// Returns a prepared Docket instance
+
 		return new Docket(DocumentationType.SWAGGER_2).select() // ApiSelectorBuilder
-				// .paths(PathSelectors.ant("/api/*"))
+				.paths(PathSelectors.ant("/appointment/*"))
 				.apis(RequestHandlerSelectors.basePackage("com.demo.hospital.managment.schedulerservice")).build()
 				.apiInfo(DEFAULT_API_INFO).produces(DEFAULT_PRODUCES_AND_CONSUMES)
 				.consumes(DEFAULT_PRODUCES_AND_CONSUMES);
+
 	}
 }
 

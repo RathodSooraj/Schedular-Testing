@@ -12,18 +12,22 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 @Getter
 @Setter
 @Entity
 @Table(name = "appointment")
+@ApiModel(description = "Details about the appointment")
 public class Appointment {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "appointment_id")
 	private Long appointmentId;
 	@Column(name = "meeting_title")
+	@ApiModelProperty(notes = "Appointment Title")
 	private String meetingTitle;
 	@Column(name = "description")
 	private String description;

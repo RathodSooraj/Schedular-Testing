@@ -27,8 +27,11 @@ import com.demo.hospital.managment.schedulerservice.util.AppointmentUtil;
 import com.demo.hospital.managment.schedulerservice.util.MessageResponseDto;
 import com.demo.hospital.managment.schedulerservice.util.StatusMessage;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+
 /**
- * @author suraj
+ * @author suraj 
  *
  */
 @RestController
@@ -48,7 +51,9 @@ public class AppointmentController {
 	 * @return Confirmation Message
 	 */
 	@PostMapping("/save")
-	public ResponseEntity<MessageResponseDto> saveAppointment(@RequestBody Appointment appointment) {
+	@ApiOperation(value = "save appointment",notes ="Provide appointment details and store it in database")
+	
+	public ResponseEntity<MessageResponseDto> saveAppointment(@ApiParam(value = "Appoinetment Object To Store Data",required = true) @RequestBody Appointment appointment) {
 		ResponseEntity<MessageResponseDto> resp = null;
 		try {
 			Long id = appointmentService.saveAppointment(appointment);
