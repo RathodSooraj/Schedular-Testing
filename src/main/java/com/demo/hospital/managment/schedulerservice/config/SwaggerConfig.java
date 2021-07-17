@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -21,35 +20,47 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 public class SwaggerConfig {
 
-	// Adding applicaton meta data
-	public static final Contact DEFAULT_CONTACT = new Contact("Suraj Rathod", "http://www.citiustech.com",
-			"Suraj.Rathod@citiustech.com");
-
-	private static final ApiInfo DEFAULT_API_INFO = new ApiInfo("Scheduling API Documentation",
-			"Scheduling Api Documentation Description", "Version 1.0", "Free To Use", DEFAULT_CONTACT, "Apache 2.0",
-			"http://www.apache.org/licenses/LICENSE-2.0", new ArrayList<>());
-
 	private static final Set<String> DEFAULT_PRODUCES_AND_CONSUMES = new HashSet<>(
 			Arrays.asList("application/json", "application/xml"));
- 
-	// Docket API
+
+	// Adding Contact Metadata 
+	public static final Contact DEFAULT_CONTACT = new Contact(
+			"Suraj Rathod", 
+			"http://www.citiustech.com",
+			"Suraj.Rathod@citiustech.com"
+			);
+	// Adding Application Metadata
+	private static final ApiInfo DEFAULT_API_INFO = new ApiInfo(
+			"Scheduling API Documentation",
+			"Scheduling Api Documentation Description", 
+			"Version 1.0",
+			"urn:tos",
+			DEFAULT_CONTACT,
+			"Apache 2.0",
+			"http://www.apache.org/licenses/LICENSE-2.0",
+			new ArrayList<>()
+			);
+
+	/*
+	 *Function to generate api documentation
+	 *@return Docket Instance 
+	 */
 	@Bean
 	public Docket api() {
-		// Returns a prepared Docket instance
 
 		return new Docket(DocumentationType.SWAGGER_2).select() // ApiSelectorBuilder
-				.paths(PathSelectors.ant("/appointment/*"))
+				.paths(PathSelectors.ant("/appointment/**"))
 				.apis(RequestHandlerSelectors.basePackage("com.demo.hospital.managment.schedulerservice")).build()
-				.apiInfo(DEFAULT_API_INFO).produces(DEFAULT_PRODUCES_AND_CONSUMES)
+				.apiInfo(DEFAULT_API_INFO)
+				.produces(DEFAULT_PRODUCES_AND_CONSUMES)
 				.consumes(DEFAULT_PRODUCES_AND_CONSUMES);
 
 	}
 }
 
+
+//future scope if we add security in this module add this lines into security config file
 /*
- * //endpoints - localhost:5011/v2/api-docs - json format //endpoints -
- * localhost:5011/swagger-ui/index.html
- * 
  * websecurityconfig http.authorizeRequests().antMatchers("/v2/api-docs",
  * "/configuration/ui", "/swagger-resources/**", "/configuration/security",
  * "/swagger-ui.html", "/webjars/**").permitAll();

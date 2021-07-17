@@ -18,7 +18,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "appointment")
-@ApiModel(description = "Details about the appointment")
+@ApiModel(description = "Details About The Appointment")
 public class Appointment {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -28,17 +28,23 @@ public class Appointment {
 	@ApiModelProperty(notes = "Appointment Title")
 	private String meetingTitle;
 	@Column(name = "description")
+	@ApiModelProperty(notes = "Appointment Description")
 	private String description;
 	@Column(name = "physician_id")
+	@ApiModelProperty(notes = "Physician Id")
 	private Long physicianId;
 	@Column(name = "patient_id")
+	@ApiModelProperty(notes = "Patient Id")
 	private Long patientId;
 	@Column(name = "appointment_date")
 	@JsonFormat(pattern = "yyyy-MM-dd")
+	@ApiModelProperty(notes = "Appointment Date")
 	private LocalDate appointmentDate;
 	@Column(name = "appointment_start_time")
+	@ApiModelProperty(notes = "Appointment Start Time")
 	private LocalTime appointmentStartTime;
 	@Column(name = "appointment_end_time")
+	@ApiModelProperty(notes = "Appointment End Time")
 	private LocalTime appointmentEndTime;
 	@Column(name = "edit_id")
 	private Long edit_id;
