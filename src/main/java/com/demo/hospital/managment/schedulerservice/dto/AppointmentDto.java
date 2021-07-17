@@ -10,14 +10,18 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import java.io.Serializable;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class AppointmentDto {
-
+public class AppointmentDto implements Serializable, Cloneable {
+	
+	private static final long serialVersionUID = 1L;
+	
+	
 	private Long appointmentId;
 	
 	private String meetingTitle;

@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.demo.hospital.managment.schedulerservice.dto.AppointmentDto;
 import com.demo.hospital.managment.schedulerservice.entity.Appointment;
+import com.demo.hospital.managment.schedulerservice.entity.User;
 
 public interface AppointmentServiceInteface {
 
