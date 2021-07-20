@@ -21,7 +21,6 @@ import lombok.Setter;
 @ApiModel(description = "Details About The Appointment")
 public class Appointment {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "appointment_id")
 	private Long appointmentId;
 	@Column(name = "meeting_title")

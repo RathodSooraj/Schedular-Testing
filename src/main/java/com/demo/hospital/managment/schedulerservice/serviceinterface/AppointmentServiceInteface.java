@@ -1,9 +1,11 @@
 package com.demo.hospital.managment.schedulerservice.serviceinterface;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 import com.demo.hospital.managment.schedulerservice.dto.AppointmentDto;
+import com.demo.hospital.managment.schedulerservice.dto.AvailableSlotDto;
 import com.demo.hospital.managment.schedulerservice.entity.Appointment;
 import com.demo.hospital.managment.schedulerservice.entity.User;
 
@@ -22,5 +24,7 @@ public interface AppointmentServiceInteface {
 	public Long updateAppointment(Appointment appointment);
 
 	public AppointmentDto getAppointmentById(Long id);
+
+	public boolean isSlotAvailable(AvailableSlotDto availableSlot);
 
 }
