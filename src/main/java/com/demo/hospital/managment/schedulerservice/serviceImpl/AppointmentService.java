@@ -1,14 +1,19 @@
 package com.demo.hospital.managment.schedulerservice.serviceImpl;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.demo.hospital.managment.schedulerservice.dto.AppointmentDto;
+import com.demo.hospital.managment.schedulerservice.dto.AvailableSlotDto;
+
 import org.springframework.web.client.RestTemplate;
 
 import com.demo.hospital.managment.schedulerservice.entity.Appointment;
@@ -75,5 +80,16 @@ public class AppointmentService implements AppointmentServiceInteface {
 		return dto;
 	}
 
+	@Override
+	public boolean isSlotAvailable(AvailableSlotDto availableSlot) {
+		List<Appointment> listApt = new ArrayList<>();
+		if (availableSlot.getRole().equalsIgnoreCase("Physician")) {
+			listApt = getAppointmentToPatient(availableSlot.getId(),availableSlot.getAppointmentDate(),availableSlot.getAppointmentDate());
+		} else if (availableSlot.getRole( ).equalsIgnoreCase("Patient")) {
+			listApt = getAppointmentToPhysician(availableSlot.getId(),availableSlot.getAppointmentDate(),availableSlot.getAppointmentDate());
+		}
+		Optional<Appointment> optional =listApt.stream().filter(apt -> apt.getAppointmentStartTime().equals(availableSlot.getAppointmentStartTime())).findFirst();
+		return !optional.isPresent();
+	}
 
 }

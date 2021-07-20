@@ -1,6 +1,7 @@
 package com.demo.hospital.managment.schedulerservice.controller;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +25,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.demo.hospital.managment.schedulerservice.dto.AppointmentDto;
+import com.demo.hospital.managment.schedulerservice.dto.AvailableSlotDto;
+
 import org.springframework.web.client.RestTemplate;
 
 import com.demo.hospital.managment.schedulerservice.entity.Appointment;
@@ -196,6 +199,26 @@ public class AppointmentController {
 		} catch (Exception e) {
 			e.getMessage();
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
+	}
+	
+	/**
+	 * This API is use to get all appointment of physician
+	 * 
+	 * @author AnaghaJ2
+	 * @param
+	 * @return
+	 */
+
+	@PostMapping(path = "/isSlotAvailable")
+	public ResponseEntity<Boolean> isSlotAvailable(@RequestBody AvailableSlotDto availableSlot) {
+		try {
+			boolean isAppointment = appointmentService.isSlotAvailable(availableSlot);
+			return new ResponseEntity<>(isAppointment, HttpStatus.OK);
+		} catch (Exception e) {
+			e.getMessage();
+			return new ResponseEntity<>(false, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
 	}

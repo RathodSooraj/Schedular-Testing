@@ -20,7 +20,6 @@ import lombok.Setter;
 @Table(name = "appointment")
 public class Appointment extends Auditable<String> {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "appointment_id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long appointmentId;
@@ -40,5 +39,5 @@ public class Appointment extends Auditable<String> {
 	@Column(name = "appointment_end_time")
 	private LocalTime appointmentEndTime;
 	@Column(name = "edit_id")
-	private Long editId;
+	private Long edit_id;
 }
