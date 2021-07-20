@@ -17,8 +17,6 @@ import lombok.Setter;
 
 @Getter
 @Setter
-
-
 public class AppointmentDto implements Serializable, Cloneable {
 	
 	private static final long serialVersionUID = 1L;
