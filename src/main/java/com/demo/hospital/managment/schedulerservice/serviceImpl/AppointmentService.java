@@ -27,7 +27,6 @@ public class AppointmentService implements AppointmentServiceInteface {
 	@Autowired
 	AppointmentRepository appointmentRepository;
 
-
 	@Override
 	public List<Appointment> getAppointmentToPhysician(Long physicianId, LocalDate startDate, LocalDate endDate) {
 		return appointmentRepository.getAppointmentToPhysician(physicianId, startDate, endDate);
@@ -42,7 +41,7 @@ public class AppointmentService implements AppointmentServiceInteface {
 	@Override
 	public Long saveAppointment(Appointment appointment) {
 		Appointment appt = appointmentRepository.save(appointment);
-		
+
 		return appt.getAppointmentId();
 	}
 
@@ -65,7 +64,7 @@ public class AppointmentService implements AppointmentServiceInteface {
 
 	@Override
 	public AppointmentDto getAppointmentById(Long id) {
-		
+
 		Appointment apt = appointmentRepository.findById(id).get();
 		AppointmentDto dto = new AppointmentDto();
 		dto.setAppointmentId(apt.getAppointmentId());
@@ -84,12 +83,31 @@ public class AppointmentService implements AppointmentServiceInteface {
 	public boolean isSlotAvailable(AvailableSlotDto availableSlot) {
 		List<Appointment> listApt = new ArrayList<>();
 		if (availableSlot.getRole().equalsIgnoreCase("Physician")) {
-			listApt = getAppointmentToPatient(availableSlot.getId(),availableSlot.getAppointmentDate(),availableSlot.getAppointmentDate());
-		} else if (availableSlot.getRole( ).equalsIgnoreCase("Patient")) {
-			listApt = getAppointmentToPhysician(availableSlot.getId(),availableSlot.getAppointmentDate(),availableSlot.getAppointmentDate());
+			listApt = getAppointmentToPatient(availableSlot.getId(), availableSlot.getAppointmentDate(),
+					availableSlot.getAppointmentDate());
+		} else if (availableSlot.getRole().equalsIgnoreCase("Patient")) {
+			listApt = getAppointmentToPhysician(availableSlot.getId(), availableSlot.getAppointmentDate(),
+					availableSlot.getAppointmentDate());
 		}
-		Optional<Appointment> optional =listApt.stream().filter(apt -> apt.getAppointmentStartTime().equals(availableSlot.getAppointmentStartTime())).findFirst();
+		Optional<Appointment> optional = listApt.stream()
+				.filter(apt -> apt.getAppointmentStartTime().equals(availableSlot.getAppointmentStartTime()))
+				.findFirst();
 		return !optional.isPresent();
+	}
+
+	@Override
+	public List<Appointment> getAllAppointment() {
+		return appointmentRepository.findAll();
+	}
+
+	@Override
+	public List<Appointment> getAllAppointmentByPatientId(Long Id) {
+		return appointmentRepository.findByPatientId(Id);
+	}
+
+	@Override
+	public List<Appointment> getAllAppointmentByPhysicianId(Long Id) {
+		return appointmentRepository.findByPhysicianId(Id);
 	}
 
 }

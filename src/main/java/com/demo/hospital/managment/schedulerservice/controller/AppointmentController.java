@@ -76,7 +76,7 @@ public class AppointmentController {
 			@ApiParam(value = "Appoinetment Object To Store Data", required = true) @RequestBody Appointment appointment) {
 		ResponseEntity<MessageResponseDto> resp = null;
 		try {
-			
+
 			System.out.println("save appt");
 
 			Long id = appointmentService.saveAppointment(appointment);
@@ -141,7 +141,7 @@ public class AppointmentController {
 	public ResponseEntity<List<Appointment>> getAppointmentToPatient(
 			@ApiParam(value = "Patient Id", required = true) @RequestParam Long patientId,
 			@ApiParam(value = "Start Date", required = true) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
-			@ApiParam(value = "End Date", required = true)@DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) {
+			@ApiParam(value = "End Date", required = true) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) {
 
 		try {
 			List<Appointment> listAppointment = appointmentService.getAppointmentToPatient(patientId, startDate,
@@ -162,22 +162,21 @@ public class AppointmentController {
 	 * @return
 	 */
 
-	
-	  @GetMapping(path = "/getAppointmentById")
-	  
-	  @ApiOperation(value = "Fetch An Existing Appointment", notes =
-	  "Provide Date In Range (From-To {Date})") public
-	  ResponseEntity<AppointmentDto> getAppointmentById(
-	  
-	  @ApiParam(value = "Appointment Id", required = true) @RequestParam Long id) {
-	  try { AppointmentDto appointmentDto =
-	  appointmentService.getAppointmentById(id); return new
-	  ResponseEntity<>(appointmentDto, HttpStatus.OK); } catch (Exception e) {
-	  e.getMessage(); return new ResponseEntity<>(null,
-	  HttpStatus.INTERNAL_SERVER_ERROR); }
-	  
-	  }
-	 
+	@GetMapping(path = "/getAppointmentById")
+
+	@ApiOperation(value = "Fetch An Existing Appointment", notes = "Provide Date In Range (From-To {Date})")
+	public ResponseEntity<AppointmentDto> getAppointmentById(
+
+			@ApiParam(value = "Appointment Id", required = true) @RequestParam Long id) {
+		try {
+			AppointmentDto appointmentDto = appointmentService.getAppointmentById(id);
+			return new ResponseEntity<>(appointmentDto, HttpStatus.OK);
+		} catch (Exception e) {
+			e.getMessage();
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
+	}
 
 	/**
 	 * @param appointmentId
@@ -225,8 +224,7 @@ public class AppointmentController {
 		}
 		return resp;
 	}
-	
-	
+
 	/**
 	 * This API is use to get all appointment of physician
 	 * 
@@ -245,6 +243,54 @@ public class AppointmentController {
 			return new ResponseEntity<>(false, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
+	}
+
+	@GetMapping(path = "/getAll")
+	public ResponseEntity<?> getAllAppointment() {
+		ResponseEntity<?> resp = null;
+		try {
+
+			List<Appointment> body = appointmentService.getAllAppointment();
+			resp = new ResponseEntity<List<Appointment>>(body, HttpStatus.OK);
+
+		} catch (Exception e) {
+			resp = new ResponseEntity<>(new MessageResponseDto(StatusMessage.SERVER_ERROR.getMessage()),
+					HttpStatus.INTERNAL_SERVER_ERROR);
+			e.printStackTrace();
+		}
+		return resp;
+	}
+
+	@GetMapping(path = "/getAllPatient/{patientId}")
+	public ResponseEntity<?> getAllAppointmentOfPatient(@PathVariable Long patientId) {
+		ResponseEntity<?> resp = null;
+		try {
+
+			List<Appointment> body = appointmentService.getAllAppointmentByPatientId(patientId);
+			resp = new ResponseEntity<List<Appointment>>(body, HttpStatus.OK);
+
+		} catch (Exception e) {
+			resp = new ResponseEntity<>(new MessageResponseDto(StatusMessage.SERVER_ERROR.getMessage()),
+					HttpStatus.INTERNAL_SERVER_ERROR);
+			e.printStackTrace();
+		}
+		return resp;
+	}
+
+	@GetMapping(path = "/getAllPhysician/{physicianId}")
+	public ResponseEntity<?> getAllAppointmentOfPhysician(@PathVariable Long physicianId) {
+		ResponseEntity<?> resp = null;
+		try {
+
+			List<Appointment> body = appointmentService.getAllAppointmentByPhysicianId(physicianId);
+			resp = new ResponseEntity<List<Appointment>>(body, HttpStatus.OK);
+
+		} catch (Exception e) {
+			resp = new ResponseEntity<>(new MessageResponseDto(StatusMessage.SERVER_ERROR.getMessage()),
+					HttpStatus.INTERNAL_SERVER_ERROR);
+			e.printStackTrace();
+		}
+		return resp;
 	}
 
 }
