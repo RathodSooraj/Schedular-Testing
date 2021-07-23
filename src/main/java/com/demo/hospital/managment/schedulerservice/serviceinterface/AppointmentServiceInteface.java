@@ -27,4 +27,10 @@ public interface AppointmentServiceInteface {
 
 	public boolean isSlotAvailable(AvailableSlotDto availableSlot);
 
+	public List<Appointment> getAllAppointment();
+
+	public List<Appointment> getAllAppointmentByPatientId(Long Id);
+
+	public List<Appointment> getAllAppointmentByPhysicianId(Long Id);
+
 }
