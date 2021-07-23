@@ -19,9 +19,10 @@ import lombok.Setter;
 @Entity
 @Table(name = "appointment")
 @ApiModel(description = "Details About The Appointment")
-public class Appointment {
+public class Appointment extends Auditable<String> {
 	@Id
 	@Column(name = "appointment_id")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long appointmentId;
 	@Column(name = "meeting_title")
 	@ApiModelProperty(notes = "Appointment Title")

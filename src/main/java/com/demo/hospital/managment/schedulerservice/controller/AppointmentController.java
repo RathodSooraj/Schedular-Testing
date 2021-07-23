@@ -44,8 +44,9 @@ import io.swagger.annotations.ApiParam;
  *
  */
 @RestController
-@RequestMapping("appointment")
-@CrossOrigin(value = "http://localhost:4200")
+@RequestMapping("/appointment")
+//@CrossOrigin(value = "http://localhost:4200")
+@CrossOrigin(origins = "*", maxAge = 3600)
 public class AppointmentController {
 
 	private Logger log = LoggerFactory.getLogger(AppointmentController.class);
@@ -75,6 +76,8 @@ public class AppointmentController {
 			@ApiParam(value = "Appoinetment Object To Store Data", required = true) @RequestBody Appointment appointment) {
 		ResponseEntity<MessageResponseDto> resp = null;
 		try {
+			
+			System.out.println("save appt");
 
 			Long id = appointmentService.saveAppointment(appointment);
 			if (id > 0 && id != null) {
