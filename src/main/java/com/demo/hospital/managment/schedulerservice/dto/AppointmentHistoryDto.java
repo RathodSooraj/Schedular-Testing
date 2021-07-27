@@ -37,4 +37,8 @@ public class AppointmentHistoryDto implements Serializable, Cloneable {
 
 	private String lastName;
 
+	private String patientFirstName;
+
+	private String patientLastName;
+
 }
