@@ -135,8 +135,8 @@ public class AppointmentService implements AppointmentServiceInteface {
 				historyDto.setPatientId(id.getPatientId());
 				historyDto.setPhysicianId(id.getPhysicianId());
 				if (id.getPatientId() == user.getUserId()) {
-					historyDto.setFirstName(user.getFirstName());
-					historyDto.setLastName(user.getLastName());
+					historyDto.setPatientFirstName(user.getFirstName());
+					historyDto.setPatientLastName(user.getLastName());
 				} else if (id.getPhysicianId() == user.getUserId()) {
 					historyDto.setFirstName(user.getFirstName());
 					historyDto.setLastName(user.getLastName());
@@ -150,3 +150,11 @@ public class AppointmentService implements AppointmentServiceInteface {
 	}
 
 }
+
+/*
+ * User[] usersArray = restTemplate.getForObject(URI_USERS, User[].class);
+ * 
+ * // "users/{id}" Map<String, String> params = new HashMap<String, String>();
+ * params.put("id", "1"); User user = restTemplate.getForObject(URI_USERS_ID,
+ * User.class, params);
+ */
