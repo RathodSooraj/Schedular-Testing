@@ -5,6 +5,7 @@ import java.time.LocalTime;
 import java.util.List;
 
 import com.demo.hospital.managment.schedulerservice.dto.AppointmentDto;
+import com.demo.hospital.managment.schedulerservice.dto.AppointmentHistoryDto;
 import com.demo.hospital.managment.schedulerservice.dto.AvailableSlotDto;
 import com.demo.hospital.managment.schedulerservice.entity.Appointment;
 import com.demo.hospital.managment.schedulerservice.entity.User;
@@ -28,6 +29,8 @@ public interface AppointmentServiceInteface {
 	public boolean isSlotAvailable(AvailableSlotDto availableSlot);
 
 	public List<Appointment> getAllAppointment();
+
+	public List<AppointmentHistoryDto> getAllAppointmentHistory();
 
 	public List<Appointment> getAllAppointmentByPatientId(Long Id);
 
