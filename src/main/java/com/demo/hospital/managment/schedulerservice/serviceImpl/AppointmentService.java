@@ -134,7 +134,10 @@ public class AppointmentService implements AppointmentServiceInteface {
 				historyDto.setAppointmentDate(id.getAppointmentDate());
 				historyDto.setPatientId(id.getPatientId());
 				historyDto.setPhysicianId(id.getPhysicianId());
-				if (id.getPatientId() == user.getUserId() || id.getPhysicianId() == user.getUserId()) {
+				if (id.getPatientId() == user.getUserId()) {
+					historyDto.setFirstName(user.getFirstName());
+					historyDto.setLastName(user.getLastName());
+				} else if (id.getPhysicianId() == user.getUserId()) {
 					historyDto.setFirstName(user.getFirstName());
 					historyDto.setLastName(user.getLastName());
 				}
