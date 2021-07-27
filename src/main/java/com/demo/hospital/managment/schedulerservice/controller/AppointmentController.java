@@ -1,8 +1,6 @@
 package com.demo.hospital.managment.schedulerservice.controller;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.HashMap;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -24,11 +22,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.demo.hospital.managment.schedulerservice.dto.AppointmentDto;
+import com.demo.hospital.managment.schedulerservice.dto.AppointmentHistoryDto;
 import com.demo.hospital.managment.schedulerservice.dto.AvailableSlotDto;
-
-import org.springframework.web.client.RestTemplate;
-
-import com.demo.hospital.managment.schedulerservice.dto.AppointmentDto;
 import com.demo.hospital.managment.schedulerservice.entity.Appointment;
 import com.demo.hospital.managment.schedulerservice.serviceinterface.AppointmentServiceInteface;
 import com.demo.hospital.managment.schedulerservice.util.AppointmentUtil;
@@ -56,9 +51,6 @@ public class AppointmentController {
 
 	@Autowired
 	private EmailUtil emailUtil;
-
-	@Autowired
-	RestTemplate restTemplate;
 
 	@Value("${to.email}")
 	private String emailAddress;
@@ -250,8 +242,9 @@ public class AppointmentController {
 		ResponseEntity<?> resp = null;
 		try {
 
-			List<Appointment> body = appointmentService.getAllAppointment();
-			resp = new ResponseEntity<List<Appointment>>(body, HttpStatus.OK);
+			List<Appointment> list = appointmentService.getAllAppointment();
+
+			resp = new ResponseEntity<List<Appointment>>(list, HttpStatus.OK);
 
 		} catch (Exception e) {
 			resp = new ResponseEntity<>(new MessageResponseDto(StatusMessage.SERVER_ERROR.getMessage()),
@@ -284,6 +277,23 @@ public class AppointmentController {
 
 			List<Appointment> body = appointmentService.getAllAppointmentByPhysicianId(physicianId);
 			resp = new ResponseEntity<List<Appointment>>(body, HttpStatus.OK);
+
+		} catch (Exception e) {
+			resp = new ResponseEntity<>(new MessageResponseDto(StatusMessage.SERVER_ERROR.getMessage()),
+					HttpStatus.INTERNAL_SERVER_ERROR);
+			e.printStackTrace();
+		}
+		return resp;
+	}
+
+	@GetMapping(path = "/getAllHistory")
+	public ResponseEntity<?> getAllAppointmentHistory() {
+		ResponseEntity<?> resp = null;
+		try {
+
+			List<AppointmentHistoryDto> list = appointmentService.getAllAppointmentHistory();
+
+			resp = new ResponseEntity<List<AppointmentHistoryDto>>(list, HttpStatus.OK);
 
 		} catch (Exception e) {
 			resp = new ResponseEntity<>(new MessageResponseDto(StatusMessage.SERVER_ERROR.getMessage()),

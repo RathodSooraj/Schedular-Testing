@@ -1,31 +1,35 @@
 package com.demo.hospital.managment.schedulerservice.serviceImpl;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
-import com.demo.hospital.managment.schedulerservice.dto.AppointmentDto;
-import com.demo.hospital.managment.schedulerservice.dto.AvailableSlotDto;
-
 import org.springframework.web.client.RestTemplate;
 
+import com.demo.hospital.managment.schedulerservice.controller.AppointmentController;
+import com.demo.hospital.managment.schedulerservice.dto.AppointmentDto;
+import com.demo.hospital.managment.schedulerservice.dto.AppointmentHistoryDto;
+import com.demo.hospital.managment.schedulerservice.dto.AvailableSlotDto;
 import com.demo.hospital.managment.schedulerservice.entity.Appointment;
 import com.demo.hospital.managment.schedulerservice.entity.User;
 import com.demo.hospital.managment.schedulerservice.repository.AppointmentRepository;
 import com.demo.hospital.managment.schedulerservice.serviceinterface.AppointmentServiceInteface;
-import com.demo.hospital.managment.schedulerservice.util.EmailUtil;
 
 @Service
 public class AppointmentService implements AppointmentServiceInteface {
 	@Autowired
 	AppointmentRepository appointmentRepository;
+
+	@Autowired
+	RestTemplate restTemplate;
+
+	private Logger log = LoggerFactory.getLogger(AppointmentController.class);
 
 	@Override
 	public List<Appointment> getAppointmentToPhysician(Long physicianId, LocalDate startDate, LocalDate endDate) {
@@ -108,6 +112,38 @@ public class AppointmentService implements AppointmentServiceInteface {
 	@Override
 	public List<Appointment> getAllAppointmentByPhysicianId(Long Id) {
 		return appointmentRepository.findByPhysicianId(Id);
+	}
+
+	@Override
+	public List<AppointmentHistoryDto> getAllAppointmentHistory() {
+
+		List<AppointmentHistoryDto> apptHistoryList = new ArrayList<AppointmentHistoryDto>();
+
+		List<Appointment> list = getAllAppointment();
+
+		list.forEach(id -> {
+			AppointmentHistoryDto historyDto = new AppointmentHistoryDto();
+
+			String URI_USERS = "http://localhost:8081/user/getAllUser";
+			User[] userArray = restTemplate.getForObject(URI_USERS, User[].class);
+			List<User> users = Arrays.asList(userArray);
+			users.forEach(user -> {
+				historyDto.setAppointmentId(id.getAppointmentId());
+				historyDto.setMeetingTitle(id.getMeetingTitle());
+				historyDto.setDescription(id.getDescription());
+				historyDto.setAppointmentDate(id.getAppointmentDate());
+				historyDto.setPatientId(id.getPatientId());
+				historyDto.setPhysicianId(id.getPhysicianId());
+				if (id.getPatientId() == user.getUserId() || id.getPhysicianId() == user.getUserId()) {
+					historyDto.setFirstName(user.getFirstName());
+					historyDto.setLastName(user.getLastName());
+				}
+			});
+			apptHistoryList.add(historyDto);
+
+		});
+
+		return apptHistoryList;
 	}
 
 }
