@@ -29,21 +29,25 @@ public class AppointmentService implements AppointmentServiceInteface {
 	@Autowired
 	RestTemplate restTemplate;
 
-	private Logger log = LoggerFactory.getLogger(AppointmentController.class);
+	private Logger log = LoggerFactory.getLogger(AppointmentService.class);
 
 	@Override
 	public List<Appointment> getAppointmentToPhysician(Long physicianId, LocalDate startDate, LocalDate endDate) {
+		log.info("Inside getAppointmentToPhysician Service");
 		return appointmentRepository.getAppointmentToPhysician(physicianId, startDate, endDate);
 	}
 
 	@Override
 	public List<Appointment> getAppointmentToPatient(Long patientId, LocalDate startDate, LocalDate endDate) {
+		log.info("Inside getAppointmentToPatient Service");
 
 		return appointmentRepository.getAppointmentToPatient(patientId, startDate, endDate);
 	}
 
 	@Override
 	public Long saveAppointment(Appointment appointment) {
+		log.info("Inside saveAppointment Service");
+
 		Appointment appt = appointmentRepository.save(appointment);
 
 		return appt.getAppointmentId();
@@ -51,23 +55,28 @@ public class AppointmentService implements AppointmentServiceInteface {
 
 	@Override
 	public void deleteAppointment(Long appointmentId) {
+		log.info("Inside deleteAppointment Service");
+
 		Appointment appointment = findAppointmentById(appointmentId);
 		appointmentRepository.delete(appointment);
 	}
 
 	@Override
 	public Appointment findAppointmentById(Long appointmentId) {
+		log.info("Inside findAppointmentById Service");
 		Appointment appointment = appointmentRepository.findById(appointmentId).get();
 		return appointment;
 	}
 
 	@Override
 	public Long updateAppointment(Appointment appointment) {
+		log.info("Inside updateAppointment Service");
 		return saveAppointment(appointment);
 	}
 
 	@Override
 	public AppointmentDto getAppointmentById(Long id) {
+		log.info("Inside getAppointmentById Service");
 
 		Appointment apt = appointmentRepository.findById(id).get();
 		AppointmentDto dto = new AppointmentDto();
@@ -85,6 +94,7 @@ public class AppointmentService implements AppointmentServiceInteface {
 
 	@Override
 	public boolean isSlotAvailable(AvailableSlotDto availableSlot) {
+		log.info("Inside isSlotAvailable Service");
 		List<Appointment> listApt = new ArrayList<>();
 		if (availableSlot.getRole().equalsIgnoreCase("Physician")) {
 			listApt = getAppointmentToPatient(availableSlot.getId(), availableSlot.getAppointmentDate(),
@@ -101,22 +111,26 @@ public class AppointmentService implements AppointmentServiceInteface {
 
 	@Override
 	public List<Appointment> getAllAppointment() {
+		log.info("Inside getAllAppointment Service");
 		return appointmentRepository.findAll();
 	}
 
 	@Override
 	public List<Appointment> getAllAppointmentByPatientId(Long Id) {
+		log.info("Inside getAllAppointmentByPatientId Service");
 		return appointmentRepository.findByPatientId(Id);
 	}
 
 	@Override
 	public List<Appointment> getAllAppointmentByPhysicianId(Long Id) {
+		log.info("Inside getAllAppointmentByPhysicianId Service");
 		return appointmentRepository.findByPhysicianId(Id);
 	}
 
 	@Override
 	public List<AppointmentHistoryDto> getAllAppointmentHistory() {
 
+		log.info("Inside getAllAppointmentHistory Service");
 		List<AppointmentHistoryDto> apptHistoryList = new ArrayList<AppointmentHistoryDto>();
 
 		List<Appointment> list = getAllAppointment();
@@ -150,11 +164,3 @@ public class AppointmentService implements AppointmentServiceInteface {
 	}
 
 }
-
-/*
- * User[] usersArray = restTemplate.getForObject(URI_USERS, User[].class);
- * 
- * // "users/{id}" Map<String, String> params = new HashMap<String, String>();
- * params.put("id", "1"); User user = restTemplate.getForObject(URI_USERS_ID,
- * User.class, params);
- */
