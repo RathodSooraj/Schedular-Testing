@@ -2,20 +2,24 @@ package com.demo.hospital.managment.schedulerservice.entity;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
-@Getter
-@Setter
+@Data
 @Entity
 @Table(name = "appointment")
 @ApiModel(description = "Details About The Appointment")
@@ -37,7 +41,8 @@ public class Appointment extends Auditable<String> {
 	@ApiModelProperty(notes = "Patient Id")
 	private Long patientId;
 	@Column(name = "appointment_date")
-	@JsonFormat(pattern = "yyyy-MM-dd")
+	@JsonDeserialize(using = LocalDateDeserializer.class)
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	@ApiModelProperty(notes = "Appointment Date")
 	private LocalDate appointmentDate;
 	@Column(name = "appointment_start_time")

@@ -164,7 +164,7 @@ public class AppointmentController {
 	@ApiOperation(value = "Fetch An Existing Appointment", notes = "Provide Date In Range (From-To {Date})")
 	public ResponseEntity<AppointmentDto> getAppointmentById(
 
-			@ApiParam(value = "Appointment Id", required = true) @RequestParam Long id) {
+			@ApiParam(value = "Appointment Id", required = true) @RequestParam("id") Long id) {
 		try {
 
 			log.info("Get AppointmentById");
@@ -263,7 +263,7 @@ public class AppointmentController {
 			List<Appointment> list = appointmentService.getAllAppointment();
 
 			log.info("Sending response getAppointments");
-			resp = new ResponseEntity<List<Appointment>>(list, HttpStatus.OK);
+			resp = new ResponseEntity<>(list, HttpStatus.OK);
 
 		} catch (Exception e) {
 			log.error("Exception happen" + e.getMessage());

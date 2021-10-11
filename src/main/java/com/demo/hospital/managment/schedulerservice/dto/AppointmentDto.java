@@ -18,26 +18,24 @@ import lombok.Setter;
 @Getter
 @Setter
 public class AppointmentDto implements Serializable, Cloneable {
-	
+
 	private static final long serialVersionUID = 1L;
-	
-	
+
 	private Long appointmentId;
-	
+
 	private String meetingTitle;
-	
+
 	private String description;
-	
+
 	private Long physicianId;
-	
+
 	private Long patientId;
-	
-	
+
 	private LocalDate appointmentDate;
-	
+
 	private LocalTime appointmentStartTime;
-	
+
 	private LocalTime appointmentEndTime;
-	
+
 	private Long edit_id;
 }
